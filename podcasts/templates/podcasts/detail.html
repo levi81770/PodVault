@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ podcast.title }}</h1>
+
+{% if podcast.image_url %}
+    <img src="{{ podcast.image_url }}" alt="{{ podcast.title }} cover image" width="250">
+{% endif %}
+
+<p><strong>Host:</strong> {{ podcast.host }}</p>
+<p>{{ podcast.description }}</p>
+
+<h2>Reviews</h2>
+
+{% for review in podcast.reviews.all %}
+    <div>
+        <p><strong>{{ review.user.username }}</strong></p>
+        <p>Rating: {{ review.rating }}/5</p>
+        <p>{{ review.comment }}</p>
+    </div>
+{% empty %}
+    <p>No reviews yet.</p>
+{% endfor %}
+
+{% endblock %}
