@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .models import Podcast, Review
 
@@ -33,14 +33,20 @@ class PodcastCreate(LoginRequiredMixin, CreateView):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 
-class PodcastUpdate(LoginRequiredMixin, UpdateView):
+class PodcastUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Podcast
     fields = ['title', 'description', 'host', 'image_url']
     template_name = 'podcasts/form.html'
 
-class PodcastDelete(LoginRequiredMixin, DeleteView):
+    def test_func(self):
+        return self.get_object().created_by == self.request.user
+
+class PodcastDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Podcast
     success_url = reverse_lazy('podcast_list')
+
+    def test_func(self):
+        return self.get_object().created_by == self.request.user
 
 class ReviewCreate(LoginRequiredMixin, CreateView):
     model = Review
@@ -52,14 +58,20 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
         form.instance.podcast_id = self.kwargs['pk']
         return super().form_valid(form)
 
-class ReviewUpdate(LoginRequiredMixin, UpdateView):
+class ReviewUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Review
     fields = ['rating', 'comment']
     template_name = 'podcasts/review_form.html'
 
-class ReviewDelete(LoginRequiredMixin, DeleteView):
+    def test_func(self):
+        return self.get_object().user == self.request.user
+
+class ReviewDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Review
     template_name = 'podcasts/review_confirm_delete.html'
+
+    def test_func(self):
+        return self.get_object().user == self.request.user
 
     def get_success_url(self):
         return self.object.podcast.get_absolute_url()
