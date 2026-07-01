@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .models import Podcast
+from .models import Podcast, Review
 
 
 class Home(LoginView):
@@ -41,6 +41,28 @@ class PodcastUpdate(LoginRequiredMixin, UpdateView):
 class PodcastDelete(LoginRequiredMixin, DeleteView):
     model = Podcast
     success_url = reverse_lazy('podcast_list')
+
+class ReviewCreate(LoginRequiredMixin, CreateView):
+    model = Review
+    fields = ['rating', 'comment']
+    template_name = 'podcasts/review_form.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.podcast_id = self.kwargs['pk']
+        return super().form_valid(form)
+
+class ReviewUpdate(LoginRequiredMixin, UpdateView):
+    model = Review
+    fields = ['rating', 'comment']
+    template_name = 'podcasts/review_form.html'
+
+class ReviewDelete(LoginRequiredMixin, DeleteView):
+    model = Review
+    template_name = 'podcasts/review_confirm_delete.html'
+
+    def get_success_url(self):
+        return self.object.podcast.get_absolute_url()
 
 class LogoutUser(LogoutView):
     next_page = 'home'

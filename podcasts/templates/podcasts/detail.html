@@ -1,31 +1,37 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <h1>{{ podcast.title }}</h1>
 
 {% if podcast.image_url %}
-    <img src="{{ podcast.image_url }}" alt="{{ podcast.title }} cover image" width="250">
+<img
+  src="{{ podcast.image_url }}"
+  alt="{{ podcast.title }} cover image"
+  width="250"
+/>
 {% endif %}
 
 <p><strong>Host:</strong> {{ podcast.host }}</p>
 <p>{{ podcast.description }}</p>
 
 {% if user == podcast.created_by %}
-    <a href="{% url 'podcast_update' podcast.pk %}">Edit Podcast</a>
-    <a href="{% url 'podcast_delete' podcast.pk %}">Delete Podcast</a>
+<a href="{% url 'podcast_update' podcast.pk %}">Edit Podcast</a>
+<a href="{% url 'podcast_delete' podcast.pk %}">Delete Podcast</a>
+{% endif %} {% if user.is_authenticated %}
+<a href="{% url 'review_create' podcast.pk %}">Add Review</a>
 {% endif %}
 
 <h2>Reviews</h2>
 
 {% for review in podcast.reviews.all %}
-    <div>
-        <p><strong>{{ review.user.username }}</strong></p>
-        <p>Rating: {{ review.rating }}/5</p>
-        <p>{{ review.comment }}</p>
-    </div>
+<div>
+  <p><strong>{{ review.user.username }}</strong></p>
+  <p>Rating: {{ review.rating }}/5</p>
+  <p>{{ review.comment }}</p>
+  {% if user == review.user %}
+  <a href="{% url 'review_update' review.pk %}">Edit Review</a>
+  <a href="{% url 'review_delete' review.pk %}">Delete Review</a>
+  {% endif %}
+</div>
 {% empty %}
-    <p>No reviews yet.</p>
-{% endfor %}
-
-{% endblock %}
+<p>No reviews yet.</p>
+{% endfor %} {% endblock %}
