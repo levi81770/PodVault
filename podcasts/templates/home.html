@@ -2,10 +2,28 @@
 
 {% block content %}
 
-<h1>Welcome to PodVault</h1>
+<section>
+    <h1>Welcome to PodVault</h1>
+    <p>Discover, review, and organize your favorite podcasts.</p>
+</section>
 
-<p>Discover, review, and organize your favorite podcasts.</p>
+{% if not user.is_authenticated %}
+<section>
+    <form action="{% url 'home' %}" method="post">
+        <h2>Login</h2>
 
-<a href="{% url 'podcast_list' %}">Browse Podcasts</a>
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <button type="submit">Login</button>
+    </form>
+</section>
+{% else %}
+<section>
+    <h2>Welcome back, {{ user.username }}</h2>
+</section>
+{% endif %}
 
 {% endblock %}

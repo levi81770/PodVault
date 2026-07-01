@@ -1,20 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>PodVault</title>
-</head>
-<body>
-
+  </head>
+  <body>
     <nav>
-        <a href="{% url 'home' %}">PodVault</a>
-        <a href="{% url 'podcast_list' %}">Podcasts</a>
+      <a href="{% url 'home' %}">PodVault</a>
+      <a href="{% url 'podcast_list' %}">Podcasts</a>
+
+      {% if user.is_authenticated %}
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+      </form>
+      {% else %}
+      <a href="{% url 'home' %}">Login</a>
+      <a href="{% url 'signup' %}">Sign Up</a>
+      {% endif %}
     </nav>
 
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-
-</body>
+    <main>{% block content %} {% endblock %}</main>
+  </body>
 </html>
