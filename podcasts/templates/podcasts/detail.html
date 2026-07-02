@@ -13,6 +13,17 @@
 <p><strong>Host:</strong> {{ podcast.host }}</p>
 <p>{{ podcast.description }}</p>
 
+{% if podcast.average_rating %}
+    <p>
+        Average Rating: {{ podcast.average_rating|floatformat:1 }}/5
+    </p>
+    <p>
+        Reviews: {{ podcast.review_count }}
+    </p>
+{% else %}
+    <p>No ratings yet.</p>
+{% endif %}
+
 {% if user == podcast.created_by %}
 <a href="{% url 'podcast_update' podcast.pk %}">Edit Podcast</a>
 <a href="{% url 'podcast_delete' podcast.pk %}">Delete Podcast</a>

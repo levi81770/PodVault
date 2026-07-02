@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db.models import Avg
 
 
 class Podcast(models.Model):
@@ -17,6 +18,13 @@ class Podcast(models.Model):
 
     def get_absolute_url(self):
         return reverse('podcast_detail', kwargs={'pk': self.pk})
+
+    def average_rating(self):
+        result = self.reviews.aggregate(Avg('rating'))
+        return result['rating__avg']    
+    
+    def review_count(self):
+        return self.reviews.count()
 
 
 class Review(models.Model):

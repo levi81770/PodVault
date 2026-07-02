@@ -1,22 +1,21 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <h1>All Podcasts</h1>
 
 {% for podcast in podcasts %}
-    <div>
-        <h2>
-            <a href="{% url 'podcast_detail' podcast.pk %}">
-                {{ podcast.title }}
-            </a>
-        </h2>
+<div>
+  <h2>
+    <a href="{% url 'podcast_detail' podcast.pk %}"> {{ podcast.title }} </a>
+  </h2>
 
-        <p>Hosted by {{ podcast.host }}</p>
-        <p>{{ podcast.description }}</p>
-    </div>
+  <p>Hosted by {{ podcast.host }}</p>
+  <p>{{ podcast.description }}</p>
+  {% if podcast.average_rating %}
+  <p>Rating: {{ podcast.average_rating|floatformat:1 }}/5</p>
+  {% else %}
+  <p>No ratings yet</p>
+  {% endif %}
+</div>
 {% empty %}
-    <p>No podcasts have been added yet.</p>
-{% endfor %}
-
-{% endblock %}
+<p>No podcasts have been added yet.</p>
+{% endfor %} {% endblock %}
