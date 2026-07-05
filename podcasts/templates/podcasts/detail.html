@@ -1,48 +1,73 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
 
-<h1>{{ podcast.title }}</h1>
+  <h1>{{ podcast.title }}</h1>
 
-{% if podcast.image_url %}
-<img
-  src="{{ podcast.image_url }}"
-  alt="{{ podcast.title }} cover image"
-  width="250"
-/>
-{% endif %}
-
-<p><strong>Host:</strong> {{ podcast.host }}</p>
-<p>{{ podcast.description }}</p>
-
-{% if podcast.average_rating %}
-    <p>
-        Average Rating: {{ podcast.average_rating|floatformat:1 }}/5
-    </p>
-    <p>
-        Reviews: {{ podcast.review_count }}
-    </p>
-{% else %}
-    <p>No ratings yet.</p>
-{% endif %}
-
-{% if user == podcast.created_by %}
-<a href="{% url 'podcast_update' podcast.pk %}">Edit Podcast</a>
-<a href="{% url 'podcast_delete' podcast.pk %}">Delete Podcast</a>
-{% endif %} {% if user.is_authenticated %}
-<a href="{% url 'review_create' podcast.pk %}">Add Review</a>
-{% endif %}
-
-<h2>Reviews</h2>
-
-{% for review in podcast.reviews.all %}
-<div>
-  <p><strong>{{ review.user.username }}</strong></p>
-  <p>Rating: {{ review.rating }}/5</p>
-  <p>{{ review.comment }}</p>
-  {% if user == review.user %}
-  <a href="{% url 'review_update' review.pk %}">Edit Review</a>
-  <a href="{% url 'review_delete' review.pk %}">Delete Review</a>
+  {% if podcast.image_url %}
+    <img src="{{ podcast.image_url }}"
+         alt="{{ podcast.title }} cover image"
+         width="250" />
   {% endif %}
-</div>
-{% empty %}
-<p>No reviews yet.</p>
-{% endfor %} {% endblock %}
+
+  <p><strong>Host:</strong> {{ podcast.host }}</p>
+  <p>{{ podcast.description }}</p>
+
+  {% if podcast.average_rating %}
+    <p>Average Rating: {{ podcast.average_rating|floatformat:1 }}/5</p>
+    <p>Reviews: {{ podcast.review_count }}</p>
+  {% else %}
+    <p>No ratings yet.</p>
+  {% endif %}
+
+  {% if user == podcast.created_by %}
+    <a href="{% url 'podcast_update' podcast.pk %}">Edit Podcast</a>
+    <a href="{% url 'podcast_delete' podcast.pk %}">Delete Podcast</a>
+  {% endif %}
+
+  {% if user.is_authenticated %}
+    <a href="{% url 'review_create' podcast.pk %}">Add Review</a>
+  {% endif %}
+
+  {% if user.is_authenticated %}
+
+    <form action="{% url 'add_to_playlist' podcast.id %}" method="POST">
+      {% csrf_token %}
+
+      <input type="hidden" name="next" value="{{ request.path }}">
+
+      <select name="playlist_id" onchange="handlePlaylistChange(this)">
+        <option value="" selected>Add to Playlist</option>
+
+        {% for playlist in playlists %}
+          {% if playlist not in podcast.playlists.all %}
+            <option value="{{ playlist.id }}">{{ playlist.name }}</option>
+          {% endif %}
+        {% endfor %}
+
+        <option value="create">+ Create New Playlist</option>
+
+      </select>
+
+    </form>
+
+  {% endif %}
+
+  <h2>Reviews</h2>
+
+  {% for review in podcast.reviews.all %}
+    <div>
+      <p><strong>{{ review.user.username }}</strong></p>
+      <p>Rating: {{ review.rating }}/5</p>
+      <p>{{ review.comment }}</p>
+
+      {% if user == review.user %}
+        <a href="{% url 'review_update' review.pk %}">Edit Review</a>
+        <a href="{% url 'review_delete' review.pk %}">Delete Review</a>
+      {% endif %}
+
+    </div>
+  {% empty %}
+    <p>No reviews yet.</p>
+  {% endfor %}
+
+{% endblock %}

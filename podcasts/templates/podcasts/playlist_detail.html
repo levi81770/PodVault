@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h1>{{ playlist.name }}</h1>
+
+  <p>{{ playlist.description }}</p>
+
+  <a href="{% url 'playlist_update' playlist.pk %}">Edit Playlist</a>
+  <a href="{% url 'playlist_delete' playlist.pk %}">Delete Playlist</a>
+
+  <h2>Podcasts in this Playlist</h2>
+
+  {% for podcast in playlist.podcasts.all %}
+
+    <div class="podcast-card">
+
+      <h2>
+        <a href="{% url 'podcast_detail' podcast.pk %}">{{ podcast.title }}</a>
+      </h2>
+
+      {% if podcast.image_url %}
+        <img src="{{ podcast.image_url }}"
+             alt="{{ podcast.title }} cover image"
+             width="200">
+      {% endif %}
+
+      <p><strong>Host:</strong> {{ podcast.host }}</p>
+
+      <p>{{ podcast.description }}</p>
+
+      {% if podcast.average_rating %}
+        <p>Rating: {{ podcast.average_rating|floatformat:1 }}/5</p>
+      {% else %}
+        <p>No ratings yet</p>
+      {% endif %}
+
+      <form action="{% url 'remove_from_playlist' playlist.id podcast.id %}"
+            method="POST">
+        {% csrf_token %}
+        <button type="submit">Remove from Playlist</button>
+      </form>
+
+    </div>
+
+  {% empty %}
+
+    <p>No podcasts in this playlist yet.</p>
+
+  {% endfor %}
+
+{% endblock %}

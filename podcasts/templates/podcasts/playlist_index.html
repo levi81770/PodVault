@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h1>My Playlists</h1>
+
+  <a href="{% url 'playlist_create' %}">Create New Playlist</a>
+
+  {% for playlist in playlists %}
+    <div>
+      <h2>
+        <a href="{% url 'playlist_detail' playlist.pk %}">{{ playlist.name }}</a>
+      </h2>
+      <p>{{ playlist.description }}</p>
+    </div>
+  {% empty %}
+    <p>You do not have any playlists yet.</p>
+  {% endfor %}
+
+{% endblock %}
