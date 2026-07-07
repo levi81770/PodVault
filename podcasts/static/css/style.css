@@ -9,34 +9,57 @@ body {
     color: #1f2933;
 }
 
-nav {
+.navbar {
     width: fit-content;
-    margin: 20px 8% 20px auto;
+    margin: 24px auto;
     padding: 14px 24px;
-    background-color: #241c35;
+    background-color: #1f1b2e;
     border-radius: 999px;
+    box-shadow: 0 10px 25px rgba(31, 27, 46, 0.18);
 
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.nav-links {
     display: flex;
     align-items: center;
     gap: 18px;
 }
 
-nav a,
-nav button {
+.navbar a,
+.navbar button {
     color: white;
     text-decoration: none;
     font: inherit;
+    font-weight: 500;
+    opacity: 0.9;
+    transition: 0.2s ease;
 }
 
-nav form {
+.navbar a:hover,
+.navbar button:hover {
+    opacity: 1;
+    color: #c7bfff;
+}
+
+.navbar form {
     display: inline;
 }
 
-nav button {
+.navbar button {
     background: none;
     border: none;
     cursor: pointer;
+    padding: 0;
 }
+
 main {
     width: 84%;
     margin: 40px auto;

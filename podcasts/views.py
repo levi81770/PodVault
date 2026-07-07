@@ -160,11 +160,11 @@ def add_to_playlist(request, podcast_id):
         playlist_id = request.POST.get("playlist_id")
         playlist = get_object_or_404(Playlist, id=playlist_id, owner=request.user)
 
-    playlist.podcasts.add(podcast)
+        playlist.podcasts.add(podcast)
 
-    next_url = request.POST.get("next")
-    if next_url:
-        return redirect(next_url)
+        next_url = request.POST.get("next")
+        if next_url:
+            return redirect(next_url)
 
     return redirect("podcast_list")
 
