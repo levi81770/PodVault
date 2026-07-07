@@ -206,3 +206,78 @@ form select {
 .secondary-btn {
     background-color: #1f1b2e;
 }
+
+.detail-card {
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 12px 30px rgba(31, 27, 46, 0.08);
+
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+    align-items: start;
+    margin-bottom: 40px;
+}
+
+.detail-image img {
+    width: 100%;
+    height: 280px;
+    object-fit: contain;
+    background-color: #f3f4f6;
+    border-radius: 18px;
+    padding: 14px;
+}
+
+.detail-info h1 {
+    font-size: 2.4rem;
+    margin: 0 0 10px;
+    color: #1f1b2e;
+}
+
+.detail-description {
+    line-height: 1.7;
+    color: #4b5563;
+    max-width: 720px;
+}
+
+.action-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.danger-btn {
+    background-color: #dc2626;
+}
+
+.danger-btn:hover {
+    background-color: #b91c1c;
+}
+
+.reviews-section {
+    margin-top: 30px;
+}
+
+.review-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 18px 0;
+    box-shadow: 0 8px 20px rgba(31, 27, 46, 0.07);
+}
+
+.review-card a {
+    margin-right: 12px;
+}
+
+@media (max-width: 800px) {
+    .detail-card {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-info h1 {
+        font-size: 2rem;
+    }
+}
