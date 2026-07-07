@@ -2,18 +2,16 @@
 
 {% block content %}
 
-<section class="hero">
+  <section class="hero">
     <h1>Welcome to PodVault</h1>
     <p>Discover, review, and organize your favorite podcasts.</p>
 
-    <a class="btn" href="{% url 'podcast_list' %}">
-        Browse Podcasts
-    </a>
-</section>
+    <a class="btn" href="{% url 'podcast_list' %}">Browse Podcasts</a>
+  </section>
 
-{% if not user.is_authenticated %}
-<section>
-    <form action="{% url 'home' %}" method="post">
+  {% if not user.is_authenticated %}
+    <section>
+      <form action="{% url 'home' %}" method="post">
         <h2>Login</h2>
 
         {% csrf_token %}
@@ -22,12 +20,17 @@
         <input type="hidden" name="next" value="{{ next }}">
 
         <button type="submit">Login</button>
-    </form>
-</section>
-{% else %}
-<section>
-    <h2>Welcome back, {{ user.username }}</h2>
-</section>
-{% endif %}
+
+        <p>
+          Don't have an account?
+          <a href="{% url 'signup' %}">Sign up here</a>
+        </p>
+      </form>
+    </section>
+  {% else %}
+    <section>
+      <h2>Welcome back, {{ user.username }}</h2>
+    </section>
+  {% endif %}
 
 {% endblock %}

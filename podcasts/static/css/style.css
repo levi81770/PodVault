@@ -10,19 +10,26 @@ body {
 }
 
 nav {
+    width: fit-content;
+    margin: 20px 8% 20px auto;
+    padding: 14px 24px;
+    background-color: #241c35;
+    border-radius: 999px;
+
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 20px 8%;
-    background-color: #241c35;
+    gap: 18px;
 }
 
 nav a,
 nav button {
     color: white;
     text-decoration: none;
-    margin-left: 16px;
     font: inherit;
+}
+
+nav form {
+    display: inline;
 }
 
 nav button {
@@ -30,7 +37,6 @@ nav button {
     border: none;
     cursor: pointer;
 }
-
 main {
     width: 84%;
     margin: 40px auto;
@@ -47,7 +53,26 @@ button,
     text-decoration: none;
 }
 
-.podcast-card,
+.podcast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.podcast-card {
+    background: white;
+    padding: 16px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.podcast-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
 .review-card,
 .playlist-card {
     background: white;
@@ -55,11 +80,6 @@ button,
     margin: 20px 0;
     border-radius: 14px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-}
-
-.podcast-card img {
-    max-width: 180px;
-    border-radius: 12px;
 }
 
 form input,

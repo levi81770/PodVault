@@ -11,42 +11,39 @@
 
   <h2>Podcasts in this Playlist</h2>
 
-  {% for podcast in playlist.podcasts.all %}
+  <div class="podcast-grid">
+    {% for podcast in playlist.podcasts.all %}
 
-    <div class="podcast-card">
+      <div class="podcast-card">
 
-      <h2>
-        <a href="{% url 'podcast_detail' podcast.pk %}">{{ podcast.title }}</a>
-      </h2>
+        <h2>
+          <a href="{% url 'podcast_detail' podcast.pk %}">{{ podcast.title }}</a>
+        </h2>
 
-      {% if podcast.image_url %}
-        <img src="{{ podcast.image_url }}"
-             alt="{{ podcast.title }} cover image"
-             width="200">
-      {% endif %}
+        {% if podcast.image_url %}
+          <img src="{{ podcast.image_url }}"
+               alt="{{ podcast.title }} cover image"
+               width="200">
+        {% endif %}
 
-      <p><strong>Host:</strong> {{ podcast.host }}</p>
+        {% if podcast.average_rating %}
+          <p>Rating: {{ podcast.average_rating|floatformat:1 }}/5</p>
+        {% else %}
+          <p>No ratings yet</p>
+        {% endif %}
 
-      <p>{{ podcast.description }}</p>
+        <form action="{% url 'remove_from_playlist' playlist.id podcast.id %}"
+              method="POST">
+          {% csrf_token %}
+          <button type="submit">Remove from Playlist</button>
+        </form>
 
-      {% if podcast.average_rating %}
-        <p>Rating: {{ podcast.average_rating|floatformat:1 }}/5</p>
-      {% else %}
-        <p>No ratings yet</p>
-      {% endif %}
+      </div>
 
-      <form action="{% url 'remove_from_playlist' playlist.id podcast.id %}"
-            method="POST">
-        {% csrf_token %}
-        <button type="submit">Remove from Playlist</button>
-      </form>
+    {% empty %}
 
-    </div>
+      <p>No podcasts in this playlist yet.</p>
 
-  {% empty %}
-
-    <p>No podcasts in this playlist yet.</p>
-
-  {% endfor %}
-
+    {% endfor %}
+  </div>
 {% endblock %}

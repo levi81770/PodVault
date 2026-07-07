@@ -49,7 +49,7 @@ class PodcastDetail(DetailView):
 
 class PodcastCreate(LoginRequiredMixin, CreateView):
     model = Podcast
-    fields = ["title", "description", "host", "image_url"]
+    fields = ["title", "image_url", "host", "description"]
     template_name = "podcasts/form.html"
 
     def form_valid(self, form):
@@ -59,7 +59,7 @@ class PodcastCreate(LoginRequiredMixin, CreateView):
 
 class PodcastUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Podcast
-    fields = ["title", "description", "host", "image_url"]
+    fields = ["title", "image_url", "host", "description"]
     template_name = "podcasts/form.html"
 
     def test_func(self):

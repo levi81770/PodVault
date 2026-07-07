@@ -1,44 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
   <h1>All Podcasts</h1>
-  {% for podcast in podcasts %}
-    <div class="podcast-card">
-      <h2>
-        <a href="{% url 'podcast_detail' podcast.pk %}">{{ podcast.title }}</a>
-      </h2>
-      <p>Hosted by {{ podcast.host }}</p>
-      <p>{{ podcast.description }}</p>
+  <div class="podcast-grid">
+    {% for podcast in podcasts %}
+      <div class="podcast-card">
+        <h2>
+          <a href="{% url 'podcast_detail' podcast.pk %}">{{ podcast.title }}</a>
+        </h2>
+        {% if podcast.image_url %}
+          <img src="{{ podcast.image_url }}"
+               alt="{{ podcast.title }} cover image"
+               width="250" />
+        {% endif %}
 
-      {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
 
-        <form action="{% url 'add_to_playlist' podcast.id %}" method="POST">
-          {% csrf_token %}
+          <form action="{% url 'add_to_playlist' podcast.id %}" method="POST">
+            {% csrf_token %}
 
-          <input type="hidden" name="next" value="{{ request.path }}">
+            <input type="hidden" name="next" value="{{ request.path }}">
 
-          <select name="playlist_id" onchange="handlePlaylistChange(this)">
-            <option value="" selected>Add to Playlist</option>
+            <select name="playlist_id" onchange="handlePlaylistChange(this)">
+              <option value="" selected>Add to Playlist</option>
 
-            {% for playlist in playlists %}
-              {% if playlist not in podcast.playlists.all %}
-                <option value="{{ playlist.id }}">{{ playlist.name }}</option>
-              {% endif %}
-            {% endfor %}
+              {% for playlist in playlists %}
+                {% if playlist not in podcast.playlists.all %}
+                  <option value="{{ playlist.id }}">{{ playlist.name }}</option>
+                {% endif %}
+              {% endfor %}
 
-            <option value="create">+ Create New Playlist</option>
-          </select>
-        </form>
+              <option value="create">+ Create New Playlist</option>
+            </select>
+          </form>
 
-      {% endif %}
-      {% if podcast.average_rating %}
-        <p>Rating: {{ podcast.average_rating|floatformat:1 }}/5</p>
-      {% else %}
-        <p>No ratings yet</p>
-      {% endif %}
+        {% endif %}
+        {% if podcast.average_rating %}
+          <p>Rating: {{ podcast.average_rating|floatformat:1 }}/5</p>
+        {% else %}
+          <p>No ratings yet</p>
+        {% endif %}
 
-    </div>
-  {% empty %}
-    <p>No podcasts have been added yet.</p>
-  {% endfor %}
+      </div>
+    {% empty %}
+      <p>No podcasts have been added yet.</p>
+    {% endfor %}
+  </div>
 
 {% endblock %}
