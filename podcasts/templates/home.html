@@ -2,32 +2,26 @@
 
 {% block content %}
 
-<section class="hero">
-  <div class="hero-icon">🎙</div>
+  <section class="hero">
+    <div class="hero-icon">🎙</div>
 
-  <h1>Welcome to PodVault</h1>
+    <h1>Welcome to PodVault</h1>
 
-  <p>
-    Discover, review, and organize your favorite podcasts in one place.
-  </p>
+    <p>Discover, review, and organize your favorite podcasts in one place.</p>
 
-  <div class="hero-actions">
-    <a class="btn" href="{% url 'podcast_list' %}">Browse Podcasts</a>
+    <div class="hero-actions">
+      <a class="btn" href="{% url 'podcast_list' %}">Browse Podcasts</a>
 
-    {% if user.is_authenticated %}
-      <a class="btn secondary-btn" href="{% url 'playlist_list' %}">
-        My Playlists
-      </a>
-    {% else %}
-      <a class="btn secondary-btn" href="{% url 'signup' %}">
-        Create Account
-      </a>
-    {% endif %}
-  </div>
-</section>
+      {% if user.is_authenticated %}
+        <a class="btn secondary-btn" href="{% url 'playlist_list' %}">My Playlists</a>
+      {% else %}
+        <a class="btn secondary-btn" href="{% url 'signup' %}">Create Account</a>
+      {% endif %}
+    </div>
+  </section>
 
   {% if not user.is_authenticated %}
-    <section>
+    <section class="form-card login-card">
       <form action="{% url 'home' %}" method="post">
         <h2>Login</h2>
 

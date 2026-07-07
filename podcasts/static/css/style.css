@@ -354,3 +354,43 @@ form select {
         align-items: flex-start;
     }
 }
+
+.form-card {
+    background: white;
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 34px;
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(31, 27, 46, 0.08);
+}
+
+.form-card h1 {
+    margin-top: 0;
+    color: #1f1b2e;
+}
+
+.form-card form input,
+.form-card form textarea,
+.form-card form select {
+    max-width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+}
+
+.login-card {
+    margin-top: 32px;
+}
+
+.login-card h2 {
+    margin-top: 0;
+    color: #1f1b2e;
+}
+
+.login-card p {
+    color: #6b7280;
+}
+
+.login-card a {
+    color: #5b3df5;
+    font-weight: 600;
+}

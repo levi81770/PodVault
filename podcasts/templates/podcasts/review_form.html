@@ -2,13 +2,17 @@
 
 {% block content %}
 
-<h1>Review Form</h1>
+  <section class="form-card">
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
+    <h1>Review Form</h1>
 
-    <button type="submit">Submit</button>
-</form>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <button type="submit">Submit</button>
+    </form>
+
+  </section>
 
 {% endblock %}

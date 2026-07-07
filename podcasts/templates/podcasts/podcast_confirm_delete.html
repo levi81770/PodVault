@@ -2,15 +2,19 @@
 
 {% block content %}
 
-<h1>Delete Podcast</h1>
+  <section class="form-card delete-card">
 
-<p>Are you sure you want to delete "{{ object.title }}"?</p>
+    <h1>Delete Podcast</h1>
 
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit">Yes, Delete</button>
-</form>
+    <p>Are you sure you want to delete "{{ object.title }}"?</p>
 
-<a href="{% url 'podcast_detail' object.pk %}">Cancel</a>
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit">Yes, Delete</button>
+    </form>
+
+    <a href="{% url 'podcast_detail' object.pk %}">Cancel</a>
+
+  </section>
 
 {% endblock %}
