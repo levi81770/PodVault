@@ -2,12 +2,20 @@
 
 {% block content %}
 
-  <h1>{{ playlist.name }}</h1>
+  <section class="page-header">
+    <div>
+      <h1>{{ playlist.name }}</h1>
+      <p>{{ playlist.description }}</p>
+      <span>{{ playlist.podcasts.count }} podcasts</span>
+    </div>
 
-  <p>{{ playlist.description }}</p>
+    <div class="action-links">
+      <a class="btn secondary-btn"
+         href="{% url 'playlist_update' playlist.pk %}">Edit Playlist</a>
 
-  <a href="{% url 'playlist_update' playlist.pk %}">Edit Playlist</a>
-  <a href="{% url 'playlist_delete' playlist.pk %}">Delete Playlist</a>
+      <a class="btn danger-btn" href="{% url 'playlist_delete' playlist.pk %}">Delete Playlist</a>
+    </div>
+  </section>
 
   <h2>Podcasts in this Playlist</h2>
 

@@ -2,19 +2,28 @@
 
 {% block content %}
 
-  <h1>My Playlists</h1>
-
-  <a href="{% url 'playlist_create' %}">Create New Playlist</a>
-
-  {% for playlist in playlists %}
-    <div class="playlist-card">
-      <h2>
-        <a href="{% url 'playlist_detail' playlist.pk %}">{{ playlist.name }}</a>
-      </h2>
-      <p>{{ playlist.description }}</p>
+  <section class="page-header">
+    <div>
+      <h1>My Playlists</h1>
+      <p>Organize your favorite podcasts into personal collections.</p>
     </div>
-  {% empty %}
-    <p>You do not have any playlists yet.</p>
-  {% endfor %}
 
+    <a class="btn" href="{% url 'playlist_create' %}">+ Create Playlist</a>
+  </section>
+
+  <div class="playlist-grid">
+    {% for playlist in playlists %}
+      <div class="playlist-card">
+        <h2>
+          <a href="{% url 'playlist_detail' playlist.pk %}">{{ playlist.name }}</a>
+        </h2>
+
+        <p>{{ playlist.description }}</p>
+
+        <span>{{ playlist.podcasts.count }} podcasts</span>
+      </div>
+    {% empty %}
+      <p>You do not have any playlists yet.</p>
+    {% endfor %}
+  </div>
 {% endblock %}
