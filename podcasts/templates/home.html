@@ -2,9 +2,13 @@
 
 {% block content %}
 
-<section>
+<section class="hero">
     <h1>Welcome to PodVault</h1>
     <p>Discover, review, and organize your favorite podcasts.</p>
+
+    <a class="btn" href="{% url 'podcast_list' %}">
+        Browse Podcasts
+    </a>
 </section>
 
 {% if not user.is_authenticated %}

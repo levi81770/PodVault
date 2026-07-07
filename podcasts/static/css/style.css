@@ -1,0 +1,80 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f6f3ee;
+    color: #1f2933;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 8%;
+    background-color: #241c35;
+}
+
+nav a,
+nav button {
+    color: white;
+    text-decoration: none;
+    margin-left: 16px;
+    font: inherit;
+}
+
+nav button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+main {
+    width: 84%;
+    margin: 40px auto;
+}
+
+button,
+.btn {
+    background-color: #6d4aff;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.podcast-card,
+.review-card,
+.playlist-card {
+    background: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.podcast-card img {
+    max-width: 180px;
+    border-radius: 12px;
+}
+
+form input,
+form textarea,
+form select {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    margin: 8px 0 16px;
+    padding: 10px;
+}
+
+.hero {
+    background: white;
+    padding: 50px;
+    border-radius: 18px;
+    text-align: center;
+}

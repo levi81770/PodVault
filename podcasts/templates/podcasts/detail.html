@@ -55,7 +55,7 @@
   <h2>Reviews</h2>
 
   {% for review in podcast.reviews.all %}
-    <div>
+    <div class="review-card">
       <p><strong>{{ review.user.username }}</strong></p>
       <p>Rating: {{ review.rating }}/5</p>
       <p>{{ review.comment }}</p>

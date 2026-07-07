@@ -7,7 +7,7 @@
   <a href="{% url 'playlist_create' %}">Create New Playlist</a>
 
   {% for playlist in playlists %}
-    <div>
+    <div class="playlist-card">
       <h2>
         <a href="{% url 'playlist_detail' playlist.pk %}">{{ playlist.name }}</a>
       </h2>
